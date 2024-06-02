@@ -1,0 +1,9 @@
+services:
+  devenv:
+    build: docker
+    volumes:
+      - "${PWD}:${PWD}"
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    working_dir: ${PWD}
