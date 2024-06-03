@@ -3,6 +3,7 @@ with Types; use Types;
 package Radix is
 
     function Hex_String_To_Bytes(Hex_String : String) return Byte_Array;
+    function Bytes_To_Hex_String(Bytes : Byte_Array) return String;
     function Bytes_To_B64_String(Bytes : Byte_Array) return String;
 
 private
@@ -25,6 +26,10 @@ private
         'e' => ('0' => 224, '1' => 225, '2' => 226, '3' => 227, '4' => 228, '5' => 229, '6' => 230, '7' => 231, '8' => 232, '9' => 233, 'a' => 234, 'b' => 235, 'c' => 236, 'd' => 237, 'e' => 238, 'f' => 239, others => 255),
         'f' => ('0' => 240, '1' => 241, '2' => 242, '3' => 243, '4' => 244, '5' => 245, '6' => 246, '7' => 247, '8' => 248, '9' => 249, 'a' => 250, 'b' => 251, 'c' => 252, 'd' => 253, 'e' => 254, 'f' => 255, others => 255),
         others => (others => 255)
+    );
+
+    Byte_To_Hex_Lookup : constant array (Byte) of Character := (
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', others => '?'
     );
 
     Byte_To_B64_Lookup : constant array (Byte) of Character := (

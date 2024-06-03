@@ -1,7 +1,7 @@
 package body Radix is
 
     function Hex_String_To_Bytes(Hex_String : String) return Byte_Array is
-    Bytes : Byte_Array (1 .. Hex_String'Length/2) := (others => 0);
+        Bytes : Byte_Array (1 .. Hex_String'Length/2) := (others => 0);
     begin
         for I in 1 .. Hex_String'Length/2 loop -- Loop through String 2 at a time
             declare
@@ -15,8 +15,22 @@ package body Radix is
         return Bytes;
     end Hex_String_To_Bytes;
 
+    function Bytes_To_Hex_String(Bytes : Byte_Array) return String is
+        Hex_String : String (1 .. Bytes'Length * 2);
+    begin
+        for I in Bytes'Range loop
+            declare
+                Current_Byte : Byte renames Bytes(I);
+            begin
+                Hex_String(2*I - 1) := Byte_To_Hex_Lookup(Shift_Right(Current_Byte, 4));
+                Hex_String(2*I) := Byte_To_Hex_Lookup(Current_Byte and 2#00001111#);
+            end;
+        end loop;
+        return Hex_String;
+    end Bytes_to_Hex_String;
+
     function Bytes_To_B64_String(Bytes : Byte_Array) return String is
-    B64_String : String (1 .. Bytes'Length * 4/3) := (others => '?');
+        B64_String : String (1 .. Bytes'Length * 4/3) := (others => '?');
     begin
         for I in 1 .. Bytes'Length/3 loop -- Handle 3 Bytes at a time (maps to 4 B64 characters) 
             declare
