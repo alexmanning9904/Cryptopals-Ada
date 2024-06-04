@@ -29,6 +29,15 @@ package body Radix is
         return Hex_String;
     end Bytes_to_Hex_String;
 
+    function Bytes_To_ASCII_String(Bytes : Byte_Array) return String is
+        ASCII_String : String (1 .. Bytes'Length);
+    begin
+        for I in Bytes'Range loop
+            ASCII_String(I) := Byte_To_ASCII_Lookup(Bytes(I));
+        end loop;
+        return ASCII_String;
+    end Bytes_to_ASCII_String;
+
     function Bytes_To_B64_String(Bytes : Byte_Array) return String is
         B64_String : String (1 .. Bytes'Length * 4/3) := (others => '?');
     begin

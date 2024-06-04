@@ -9,4 +9,14 @@ package body Types is
 
         return Output;
     end "xor";
+
+    function "xor" (Left : Byte_Array; Right : Byte) return Byte_Array is
+        Output : Byte_Array(1 .. Left'Length);
+    begin
+        for I in Output'Range loop
+            Output(I) := Left(I) xor Right;
+        end loop;
+
+        return Output;
+    end "xor";
 end Types;

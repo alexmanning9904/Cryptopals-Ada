@@ -8,5 +8,6 @@ package Types is
 
     -- Byte Operations
     function "xor" (Left, Right : Byte_Array) return Byte_Array;
+    function "xor" (Left : Byte_Array; Right : Byte) return Byte_Array;
 
 end Types;
