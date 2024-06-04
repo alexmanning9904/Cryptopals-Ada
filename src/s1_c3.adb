@@ -26,7 +26,7 @@ begin
    -- Execute
    Input_Bytes := Hex_String_To_Bytes(Input); -- Input Strings
 
-   for I in Byte range 65 .. 90 loop -- For each potential Key byte
+   for I in Byte'range loop -- For each potential Key byte
       Decrypted_Bytes := Input_Bytes xor I; -- Decrypt the Input
       Decrypted_String := Bytes_To_ASCII_String(Decrypted_Bytes); -- Convert the bytes to a String
       Score := English_Chi_Squared(Decrypted_String); -- Calculate the English-Ness of the string
