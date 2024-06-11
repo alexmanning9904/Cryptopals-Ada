@@ -20,7 +20,7 @@ procedure S1_C3 is
    Elapsed_Time : Time_Span;
 begin
    -- Start Challenge
-   Put_Line("Starting Set 1 Challenge 2");
+   Put_Line("Starting Set 1 Challenge 3");
    Start_Time := Clock;
 
    -- Execute
