@@ -38,6 +38,15 @@ package body Radix is
         return ASCII_String;
     end Bytes_to_ASCII_String;
 
+    function ASCII_String_To_Bytes(ASCII_String : String) return Byte_Array is
+        Bytes : Byte_Array(ASCII_String'Range);
+    begin
+        for I in ASCII_String'Range loop
+            Bytes(I) := ASCII_To_Byte_Lookup(ASCII_String(I));
+        end loop;
+        return Bytes;
+    end ASCII_String_To_Bytes;
+
     function Bytes_To_B64_String(Bytes : Byte_Array) return String is
         B64_String : String (1 .. Bytes'Length * 4/3) := (others => '?');
     begin

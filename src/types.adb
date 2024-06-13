@@ -4,7 +4,7 @@ package body Types is
         Output : Byte_Array(1 .. Left'Length);
     begin
         for I in Output'Range loop
-            Output(I) := Left(I) xor Right(I);
+            Output(I) := Left(I) xor Right((I - 1) mod Right'Length + 1);
         end loop;
 
         return Output;
