@@ -65,4 +65,43 @@ package body Radix is
         return B64_String;
     end Bytes_To_B64_String;
 
+    function B64_String_To_Bytes_Length(B64_String : String) return Natural is
+        Output : Natural := B64_String'Length * 3/4; -- B64 string can carry at most 3/4 data density
+    begin
+        if B64_String(B64_String'Last) = '=' then
+            Output := Output - 1;  -- Last byte is padding
+
+            if B64_String(B64_String'Last - 1) = '=' then
+                Output := Output - 1;  -- Last byte is padding -- Last 2 bytes are padding
+            end if;
+        end if;
+
+        return Output;
+    end B64_String_To_Bytes_Length;
+
+    function B64_String_To_Bytes(B64_String : String) return Byte_Array is
+        Bytes : Byte_Array(1 .. B64_String_To_Bytes_Length(B64_String));
+    begin
+        for I in 1 .. B64_String'Length/4 loop -- Handle 4 B64 Chars at a time (maps to 3 bytes)
+            declare
+                Char_1 : Character renames B64_String( 4*I - 3);
+                Char_2 : Character renames B64_String( 4*I - 2);
+                Char_3 : Character renames B64_String( 4*I - 1);
+                Char_4 : Character renames B64_String( 4*I - 0);
+            begin
+                Bytes(3*I - 2) := Shift_Left(B64_To_Byte_Lookup(Char_1), 2) or Shift_Right(B64_To_Byte_Lookup(Char_2), 4);
+
+                if Char_3 /= '=' then -- No padding, so there is a second byte
+                    Bytes(3*I - 1) := Shift_Left(B64_To_Byte_Lookup(Char_2), 4) or Shift_Right(B64_To_Byte_Lookup(Char_3), 2);
+                end if;
+
+                if Char_4 /= '=' then -- No padding, so there is a third byte
+                    Bytes(3*I) := Shift_Left(B64_To_Byte_Lookup(Char_3), 6) or B64_To_Byte_Lookup(Char_4);
+                end if;
+            end;
+        end loop;
+
+        return Bytes;
+    end B64_String_To_Bytes;
+
 end Radix;

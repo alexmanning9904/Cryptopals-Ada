@@ -8,6 +8,10 @@ package Radix is
     function Bytes_To_ASCII_String(Bytes : Byte_Array) return String;
     function ASCII_String_To_Bytes(ASCII_String : String) return Byte_Array;
     function Bytes_To_B64_String(Bytes : Byte_Array) return String;
+    function B64_String_To_Bytes_Length(B64_String : String) return Natural with -- Gets the number of bytes required to represent a B64 String
+    Pre =>  B64_String'Length mod 4 = 0 and
+            B64_String'Length > 0; -- B64 Strings should be multiples of 4 characters long after padding
+    function B64_String_To_Bytes(B64_String : String) return Byte_Array;
 
 private
 
@@ -246,6 +250,74 @@ private
         'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
         'w', 'x', 'y', 'z', '0', '1', '2', '3',
         '4', '5', '6', '7', '8', '9', '+', '/', others => '?'
+    );
+
+    B64_To_Byte_Lookup : constant array (Character) of Byte := (
+        'A' => 2#000000#,
+        'B' => 2#000001#,
+        'C' => 2#000010#,
+        'D' => 2#000011#,
+        'E' => 2#000100#,
+        'F' => 2#000101#,
+        'G' => 2#000110#,
+        'H' => 2#000111#,
+        'I' => 2#001000#,
+        'J' => 2#001001#,
+        'K' => 2#001010#,
+        'L' => 2#001011#,
+        'M' => 2#001100#,
+        'N' => 2#001101#,
+        'O' => 2#001110#,
+        'P' => 2#001111#,
+        'Q' => 2#010000#,
+        'R' => 2#010001#,
+        'S' => 2#010010#,
+        'T' => 2#010011#,
+        'U' => 2#010100#,
+        'V' => 2#010101#,
+        'W' => 2#010110#,
+        'X' => 2#010111#,
+        'Y' => 2#011000#,
+        'Z' => 2#011001#,
+        'a' => 2#011010#,
+        'b' => 2#011011#,
+        'c' => 2#011100#,
+        'd' => 2#011101#,
+        'e' => 2#011110#,
+        'f' => 2#011111#,
+        'g' => 2#100000#,
+        'h' => 2#100001#,
+        'i' => 2#100010#,
+        'j' => 2#100011#,
+        'k' => 2#100100#,
+        'l' => 2#100101#,
+        'm' => 2#100110#,
+        'n' => 2#100111#,
+        'o' => 2#101000#,
+        'p' => 2#101001#,
+        'q' => 2#101010#,
+        'r' => 2#101011#,
+        's' => 2#101100#,
+        't' => 2#101101#,
+        'u' => 2#101110#,
+        'v' => 2#101111#,
+        'w' => 2#110000#,
+        'x' => 2#110001#,
+        'y' => 2#110010#,
+        'z' => 2#110011#,
+        '0' => 2#110100#,
+        '1' => 2#110101#,
+        '2' => 2#110110#,
+        '3' => 2#110111#,
+        '4' => 2#111000#,
+        '5' => 2#111001#,
+        '6' => 2#111010#,
+        '7' => 2#111011#,
+        '8' => 2#111100#,
+        '9' => 2#111101#,
+        '+' => 2#111110#,
+        '/' => 2#111111#,
+        others => 0
     );
 
 end Radix;

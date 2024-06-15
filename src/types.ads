@@ -11,4 +11,8 @@ package Types is
     Pre => Left'Length >= Right'Length;
     function "xor" (Left : Byte_Array; Right : Byte) return Byte_Array;
 
+    -- Other Functions
+    function Hamming_Distance (Left, Right : Byte_Array) return Natural with
+    Pre => Left'Length = Right'Length;
+
 end Types;

@@ -3,7 +3,11 @@ project Cryptopals is
     for Create_Missing_Dirs use "true";
     for Object_Dir use "obj";
     for Exec_Dir use "build";
-    for Main use ("s1_c1.adb", "s1_c2.adb", "s1_c3.adb", "s1_c4.adb", "s1_c5.adb");
+    for Main use ("s1_c1.adb", "s1_c2.adb", "s1_c3.adb", "s1_c4.adb", "s1_c5.adb", "s1_c6.adb");
+
+    package Binder is
+        for Default_Switches ("Ada") use ("-Es");
+    end Binder;
 
     package Builder is
         for Default_Switches ("Ada") use ("-d", "-gnata", "-j0");
